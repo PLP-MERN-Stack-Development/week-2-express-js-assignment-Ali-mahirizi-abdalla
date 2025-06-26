@@ -42,7 +42,7 @@ let products = [
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('Welcome to the Product API! Go to /api/products to see all products.');
+  res.send('Welcome to the Product API! Go to /api/products to see all products');
 });
 
 // TODO: Implement the following routes:
@@ -69,3 +69,18 @@ app.listen(PORT, () => {
 
 // Export the app for testing purposes
 module.exports = app; 
+
+// GET /api/products/:id - Get a specific product by ID
+app.get('/api/products/:id', (req, res) => {
+  const productId = req.params.id;
+  const product = products.find(p => p.id === productId);
+
+  if (!product) {
+    return res.status(404).json({ error: 'Product not found' });
+  }
+
+  res.json(product);
+});
+
+// Example cURL command to test the API
+// curl -H "x-api-key: your_api_key_here" http://localhost:3000/api/products/2
